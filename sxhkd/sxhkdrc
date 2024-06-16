@@ -1,0 +1,151 @@
+# Έλεγχος έντασης ήχου
+XF86AudioRaiseVolume
+  pactl set-sink-volume @DEFAULT_SINK@ +10%
+
+XF86AudioLowerVolume
+  pactl set-sink-volume @DEFAULT_SINK@ -10%
+
+XF86AudioMute
+  pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+XF86AudioPlay
+  play-pause
+
+XF86AudioNext
+  playerctl next
+
+XF86AudioPrev
+  playerctl previous
+
+XF86AudioStop
+  playerctl stop
+
+# τερματικό
+super + Return
+	kitty
+
+# εκκίνηση προγράμματος
+super + r
+	rofi -show drun
+
+# εκκίνηση προγράμματος
+super + x
+	brave
+
+# εκκίνηση προγράμματος
+super + c
+	kitty -e nvim
+
+# εκκίνηση προγράμματος
+super + e
+  thunar
+
+# επανεκκίνηση της sxhkd και φόρτωση των αρχείων ρυθμίσεων:
+super + Escape
+	pkill -USR1 -x sxhkd
+
+#
+# hotkeys του bspwm
+#
+
+# κλείσιμο/επανεκκίνηση του bspwm
+super + shift + {q,r}
+	bspc {quit,wm -r}
+
+# κλείσιμο και εξαναγκασμένο κλείσιμο
+super + q
+	bspc node -{c,k}
+
+# εναλλαγή μεταξύ της tiled και της monocle διάταξης
+super + m
+	bspc desktop -l next
+
+# μεταφορά του πιο πρόσφατα μαρκαρισμένου κόμβου στον πιο πρόσφατα προεπιλεγμένο κόμβο
+super + y
+	bspc node newest.marked.local -n newest.!automatic.local
+
+# ανταλλαγή του τρέχοντος κόμβου με το μεγαλύτερο παράθυρο
+super + g
+	bspc node -s biggest.window
+
+#
+# κατάσταση/σημαίες
+#
+
+# ρύθμιση της κατάστασης παραθύρου
+super + {t,shift + t,s,f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# ρύθμιση των σημαίων κόμβου
+super + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+
+#
+# εστίαση/ανταλλαγή
+#
+
+# εστίαση στον κόμβο στην δεδομένη κατεύθυνση
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+# εστίαση στον κόμβο για το δεδομένο άλμα διαδρομής
+super + {p,b,comma,period}
+	bspc node -f @{parent,brother,first,second}
+
+# εστίαση στο επόμενο/προηγούμενο παράθυρο στην τρέχουσα επιφάνεια εργασίας
+super + {_,shift + }c
+	bspc node -f {next,prev}.local.!hidden.window
+
+# εστίαση στην επόμενη/προηγούμενη επιφάνεια εργασίας στην τρέχουσα οθόνη
+super + bracket{left,right}
+	bspc desktop -f {prev,next}.local
+
+# εστίαση στον τελευταίο κόμβο/επιφάνεια εργασίας
+super + {grave,Tab}
+	bspc {node,desktop} -f last
+
+# εστίαση στον παλαιότερο ή νεότερο κόμβο στο ιστορικό εστίασης
+super + {o,i}
+	bspc wm -h off; \
+	bspc node {older,newer} -f; \
+	bspc wm -h on
+
+# εστίαση ή αποστολή στον δεδομένο επιφάνεια εργασίας
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+#
+# προεπιλογή
+#
+
+# προεπιλογή της κατεύθυνσης
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+# προεπιλογή του λόγου
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# ακύρωση της προεπιλογής για τον εστιασμένο κόμβο
+super + ctrl + space
+	bspc node -p cancel
+
+# ακύρωση της προεπιλογής για την εστιασμένη επιφάνεια εργασίας
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#
+# μετακίνηση/αλλαγή μεγέθους
+#
+
+# επέκταση παραθύρου μετακινώντας μία από τις πλευρές του προς τα έξω
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# σύμπτυξη παραθύρου μετακινώντας μία από τις πλευρές του προς τα μέσα
+super + alt + shift + {h,j,k,l}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# μετακίνηση ενός παραθύρου που επιπλέει
+super + {Left,Down,Up,Right}
+	bspc node -v {-20 0,0 20,0 -20,20 0}

@@ -1,0 +1,8 @@
+Xcursor.theme: phinger-cursors-dark
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: false
+Xft.hintstyle: hintfull
+Xft.lcdfilter: lcddefault
+Xft.dpi: 96
